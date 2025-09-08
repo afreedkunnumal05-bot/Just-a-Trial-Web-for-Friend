@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Friend Message</title>
+  <style>
+    body {
+      background: #0f172a;
+      color: #e5e7eb;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #111827;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      width: 350px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background: #1f2937;
+      color: white;
+    }
+    button {
+      padding: 10px 15px;
+      background: #22d3ee;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #0ea5e9;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>💌 Hi Best Friend</h1>
+    <p>Type your name below and copy the message.</p>
+
+    <input id="{name}" placeholder="Type Your Name" />
+    <button id="copyBtn">Copy Message</button>
+  </div>
+
+  <script>
+    function buildMessage() {
+      const name = document.getElementById("{name}").value.trim();
+      return name ? `Hi ${name}, You are a pottan 😁` : "Hi bestie!";
+    }
+
+    function toast() {
+      alert("Copied to clipboard ✅");
+    }
+
+    async function copyText(text) {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        // fallback for old browsers
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+    }
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try {
+        await copyText(buildMessage());
+        toast();
+      } catch {
+        alert('Copy failed. Please Try Again');
+      }
+    });
+  </script>
+</body>
+</html>
